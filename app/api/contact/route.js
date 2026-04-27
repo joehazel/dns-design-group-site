@@ -1,15 +1,15 @@
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
- 
+
 const resend = new Resend(process.env.RESEND_API_KEY);
- 
+
 export async function POST(request) {
   const { firstName, lastName, email, projectType, message } = await request.json();
- 
+
   if (!firstName || !email || !message) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
   }
- 
+
   try {
     await resend.emails.send({
       from: 'DNS Design Group <onboarding@resend.dev>',
@@ -22,7 +22,7 @@ export async function POST(request) {
             <h2 style="margin: 0; font-size: 20px; font-weight: 500;">New Project Inquiry</h2>
             <p style="margin: 4px 0 0; color: #888780; font-size: 14px;">DNS Design Group — Contact Form</p>
           </div>
- 
+
           <table style="width: 100%; font-size: 15px; border-collapse: collapse;">
             <tr>
               <td style="padding: 8px 0; color: #888780; width: 130px;">Name</td>
@@ -37,23 +37,22 @@ export async function POST(request) {
               <td style="padding: 8px 0;">${projectType}</td>
             </tr>
           </table>
- 
+
           <div style="margin-top: 24px; padding: 16px; background: #F9F5EF; border-radius: 4px; border-left: 3px solid #BA7517;">
             <p style="margin: 0 0 8px; font-size: 13px; color: #888780; text-transform: uppercase; letter-spacing: 0.08em;">Message</p>
             <p style="margin: 0; font-size: 15px; line-height: 1.6;">${message.replace(/\n/g, '<br>')}</p>
           </div>
- 
+
           <p style="margin-top: 32px; font-size: 12px; color: #B4B2A9;">
             Reply directly to this email to respond to ${firstName}.
           </p>
         </div>
       `,
     });
- 
+
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Resend error:', error);
     return NextResponse.json({ error: 'Failed to send email' }, { status: 500 });
   }
 }
- 
