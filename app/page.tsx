@@ -62,7 +62,7 @@ const services = [
 export default function HomePage() {
   const [status, setStatus] = useState('idle'); // idle | sending | success | error
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus('sending');
 
