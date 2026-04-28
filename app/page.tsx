@@ -1,6 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
+
+type Status = 'idle' | 'sending' | 'success' | 'error';
 
 const projects = [
   {
@@ -60,24 +62,27 @@ const services = [
 ];
 
 export default function HomePage() {
-  const [status, setStatus] = useState('idle'); // idle | sending | success | error
+  const [status, setStatus] = useState<Status>('idle');
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus('sending');
 
-    const form = e.target;
+    const form = e.currentTarget;
+    const nameInput = form.elements.namedItem('name') as HTMLInputElement;
+    const emailInput = form.elements.namedItem('email') as HTMLInputElement;
+    const messageInput = form.elements.namedItem('message') as HTMLTextAreaElement;
 
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          firstName: form.name.value.trim(),
+          firstName: nameInput.value.trim(),
           lastName: '',
-          email: form.email.value.trim(),
+          email: emailInput.value.trim(),
           projectType: 'General inquiry',
-          message: form.message.value.trim(),
+          message: messageInput.value.trim(),
         }),
       });
 
