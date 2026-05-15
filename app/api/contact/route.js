@@ -12,8 +12,8 @@ export async function POST(request) {
 
   try {
     await resend.emails.send({
-      from: 'DNS Design Group <onboarding@resend.dev>',
-      to: ['blueallie3849@gmail.com', 'debmissimo@gmail.com'],
+      from: 'DNS Design Group <hello@webhazel.com>',
+      to: ['joe@webhazel.com'],
       replyTo: email,
       subject: `New inquiry from ${firstName} ${lastName} — ${projectType}`,
       html: `
