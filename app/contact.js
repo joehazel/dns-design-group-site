@@ -12,7 +12,7 @@ export async function POST(request) {
 
   try {
     await resend.emails.send({
-      from: 'DNS Design Group <onboarding@resend.dev>',
+      from: 'DNS Design Group <hello@webhazel.com>',
       to: ['joe@webhazel.com'],
       replyTo: email,
       subject: `New inquiry from ${firstName} ${lastName} — ${projectType}`,
